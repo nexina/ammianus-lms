@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="TOP_CENTER" prefHeight="699.0" prefWidth="959.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="group.one.librarymanagementsystem.librarymanagementsystemui.LibrarianUI">
+  <padding>
+    <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+  </padding>
+   <children>
+      <HBox alignment="CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="67.0" prefWidth="596.0" VBox.vgrow="NEVER">
+         <children>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="46.0" prefWidth="263.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="113.0" text="Welcome,">
+                           <font>
+                              <Font name="System Bold" size="23.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="librarian_username" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="34.0" prefWidth="714.0" text="User" wrapText="true">
+                           <font>
+                              <Font name="System Bold" size="23.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label fx:id="librarian_timeanddate" prefHeight="18.0" prefWidth="157.0" text="24 March 2024 | 12:00 PM" />
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" onAction="#signOut" text="Sign Out" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" />
+         </VBox.margin>
+      </HBox>
+      <VBox prefHeight="650.0" prefWidth="664.0" VBox.vgrow="ALWAYS">
+         <children>
+            <HBox maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="77.0" prefWidth="596.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 10; -fx-background-color: white;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="librarian_bookCount" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Total Books">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" top="5.0" />
+                     </HBox.margin>
+                     <effect>
+                        <DropShadow height="15.0" offsetY="1.0" radius="7.0" width="15.0">
+                           <color>
+                              <Color opacity="0.10000000149011612" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 10; -fx-background-color: white;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="librarian_userCount" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Total Users">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow height="15.0" offsetY="1.0" radius="7.0" width="15.0">
+                           <color>
+                              <Color opacity="0.10000000149011612" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" style="-fx-background-radius: 10; -fx-background-color: white;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label fx:id="librarian_fineCount" text="0">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <Label text="Total Fines">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                     <effect>
+                        <DropShadow height="15.0" offsetY="1.0" radius="7.0" width="15.0">
+                           <color>
+                              <Color opacity="0.10000000149011612" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                     <HBox.margin>
+                        <Insets bottom="5.0" right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+            <StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="614.0" prefWidth="664.0">
+               <children>
+                  <TabPane centerShape="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="790.0" scaleShape="false" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" StackPane.alignment="CENTER">
+                    <tabs>
+                      <Tab text="Books">
+                        <content>
+                          <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="526.0" prefWidth="753.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="526.0" prefWidth="530.0" style="-fx-background-color: white; -fx-background-radius: 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="55.0" prefWidth="910.0">
+                                             <children>
+                                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Books List" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="58.0" prefWidth="374.0" spacing="5.0" HBox.hgrow="SOMETIMES">
+                                                   <children>
+                                                      <ComboBox fx:id="librarian_searchTopic" onAction="#onfindBookTopicSelected" prefHeight="26.0" prefWidth="109.0" promptText="Find By ..." />
+                                                      <TextField fx:id="searchField" disable="true" promptText="Search" />
+                                                      <Button fx:id="clearSearchField" disable="true" mnemonicParsing="false" onAction="#doClearSearchField" text="X" textAlignment="CENTER" />
+                                                   </children>
+                                                </HBox>
+                                                <Button mnemonicParsing="false" onAction="#refreshList" text="Refresh List">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="librarian_add_books" mnemonicParsing="false" onAction="#addBookUI" text="Add Books" />
+                                                <Button fx:id="librarian_update_books" mnemonicParsing="false" onAction="#updateBookUI" text="Modify Book">
+                                                   <HBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="librarian_remove_books" mnemonicParsing="false" onAction="#removeBookUI" text="Delete Book" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </HBox>
+                                          <TableView fx:id="librarian_bookList" prefHeight="467.0" prefWidth="596.0" VBox.vgrow="ALWAYS">
+                                            <columns>
+                                              <TableColumn id="id" fx:id="idColumn" prefWidth="51.999996185302734" text="Book ID" />
+                                              <TableColumn id="title" fx:id="titleColumn" prefWidth="161.60000610351562" text="Title" />
+                                                <TableColumn id="author" fx:id="authorColumn" prefWidth="130.3999786376953" text="Author" />
+                                                <TableColumn id="publisher" fx:id="publisherColumn" minWidth="0.0" prefWidth="116.79998779296875" text="Publisher" />
+                                                <TableColumn id="category" fx:id="categoryColumn" prefWidth="114.39996337890625" text="Category" />
+                                                <TableColumn id="available" fx:id="availableColumn" prefWidth="62.39996337890625" text="Available" />
+                                                <TableColumn id="borrowed" fx:id="borrowedColumn" prefWidth="120.79998779296875" text="Borrower" />
+                                                <TableColumn id="bookshelf" fx:id="bookshelfColumn" prefWidth="78.4000244140625" text="Bookshelf" />
+                                                <TableColumn id="shelf" fx:id="shelfColumn" prefWidth="71.20003662109377" text="Shelf No" />
+                                            </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                      <Tab text="Users">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="526.0" prefWidth="530.0" style="-fx-background-color: white; -fx-background-radius: 15;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="55.0" prefWidth="910.0">
+                                             <children>
+                                                <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Users List" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets left="20.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font name="System Bold" size="15.0" />
+                                                   </font>
+                                                </Label>
+                                                <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" minHeight="-Infinity" prefHeight="58.0" prefWidth="374.0" spacing="5.0">
+                                                   <children>
+                                                      <ComboBox fx:id="librarian_userSearchTopic" onAction="#onfindUserTopicSelected" prefHeight="26.0" prefWidth="109.0" promptText="Find By ..." />
+                                                      <TextField fx:id="userSearchField" disable="true" promptText="Search" />
+                                                      <Button fx:id="clearUserSearchField" disable="true" mnemonicParsing="false" onAction="#doUserClearSearchField" text="X" textAlignment="CENTER" />
+                                                   </children>
+                                                </HBox>
+                                                <Button mnemonicParsing="false" onAction="#refreshList" text="Refresh List" />
+                                                <Button mnemonicParsing="false" onAction="#addUserUI" text="Add User">
+                                                   <HBox.margin>
+                                                      <Insets left="10.0" />
+                                                   </HBox.margin></Button>
+                                                <Button mnemonicParsing="false" onAction="#updateUserUI" text="Modify User">
+                                                   <HBox.margin>
+                                                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#updateUserFineUI" text="Update Fine">
+                                                   <HBox.margin>
+                                                      <Insets right="10.0" />
+                                                   </HBox.margin>
+                                                </Button>
+                                                <Button mnemonicParsing="false" onAction="#removeUserUI" text="Deleter User" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                          </HBox>
+                                          <TableView fx:id="librarian_userList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="467.0" prefWidth="596.0" VBox.vgrow="ALWAYS">
+                                             <columns>
+                                                <TableColumn id="iduColumn" fx:id="iduColumn" prefWidth="88.0" text="ID" />
+                                                <TableColumn fx:id="roleColumn" prefWidth="124.79998779296875" text="Role" />
+                                                <TableColumn fx:id="nameColumn" prefWidth="177.5999755859375" text="Name" />
+                                                <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="191.2000732421875" text="E-mail" />
+                                                <TableColumn fx:id="usernameColumn" prefWidth="116.79998779296875" text="Username" />
+                                                <TableColumn fx:id="passwordColumn" prefWidth="111.99993896484375" text="Password" />
+                                                <TableColumn fx:id="fineColumn" prefWidth="106.40008544921875" text="Fine" />
+                                             </columns>
+                                             <columnResizePolicy>
+                                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                             </columnResizePolicy>
+                                          </TableView>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </AnchorPane>
+                        </content>
+                      </Tab>
+                    </tabs>
+                     <StackPane.margin>
+                        <Insets />
+                     </StackPane.margin>
+                  </TabPane>
+               </children>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <effect>
+                  <DropShadow height="15.0" offsetY="1.0" radius="7.0" width="15.0">
+                     <color>
+                        <Color opacity="0.15000000596046448" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </StackPane>
+         </children></VBox>
+   </children>
+</VBox>
