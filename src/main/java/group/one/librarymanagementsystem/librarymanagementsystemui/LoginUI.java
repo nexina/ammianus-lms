@@ -52,16 +52,22 @@ public class LoginUI {
             String des_filepath = "";
             String des_title = "";
 
+            FXMLLoader fxmlLoader;
+            Scene scene;
+            LibrarianUI librarianController;
+            LibraryStaffUI librarystaffController;
+            PatronUI patronController;
+            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+
             switch (des_ind)
             {
                 case 0:
                     des_filepath = "librarian.fxml";
                     des_title = "Librarian Dashboard";
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
-                    Scene scene = new Scene(fxmlLoader.load(), 960, 560);
-                    LibrarianUI controller = fxmlLoader.getController();
-                    controller.initData(username);
-                    Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                    fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
+                    scene = new Scene(fxmlLoader.load(), 985, 560);
+                    librarianController = fxmlLoader.getController();
+                    librarianController.initData(username);
                     stage.setTitle(des_title);
                     stage.setScene(scene);
                     stage.show();
@@ -69,10 +75,24 @@ public class LoginUI {
                 case 1:
                     des_filepath = "library_staff.fxml";
                     des_title = "Library Staff Dashboard";
+                    fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
+                    scene = new Scene(fxmlLoader.load(), 985, 560);
+                    librarystaffController = fxmlLoader.getController();
+                    librarystaffController.initData(username);
+                    stage.setTitle(des_title);
+                    stage.setScene(scene);
+                    stage.show();
                     break;
                 case 2:
-                    des_filepath = "Patron.fxml";
+                    des_filepath = "patron.fxml";
                     des_title = "Patron Dashboard";
+                    fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
+                    scene = new Scene(fxmlLoader.load(), 985, 560);
+                    patronController = fxmlLoader.getController();
+                    patronController.initData(username);
+                    stage.setTitle(des_title);
+                    stage.setScene(scene);
+                    stage.show();
                     break;
                 default:
                     System.exit(0);

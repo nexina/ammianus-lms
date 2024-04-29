@@ -104,71 +104,36 @@ public class DevTools {
         for (Object[] objArray : list) {
             BookListItem bl = new BookListItem();
             int i = 0;
-            for (Object value : objArray) {
-                switch(i)
-                {
-                    case 0:
-//                        bl.setId((Integer) value);
-                        bl.id = new SimpleStringProperty(value.toString());
-                        break;
-                    case 1:
-//                        bl.setTitle((String) value);
-                        bl.title = new SimpleStringProperty((String) value);
-                        break;
-                    case 2:
-//                        bl.setAuthor((String) value);
-                        bl.author = new SimpleStringProperty((String) value);
-                        break;
-                    case 3:
-//                        bl.setPublisher((String) value);
-                        bl.publisher = new SimpleStringProperty((String) value);
-                        break;
-                    case 4:
-//                        bl.setCategory((String) value);
-                        bl.category = new SimpleStringProperty((String) value);
-                        break;
-                    case 5:
-//                        bl.setAvailable((Boolean)value);
-                        bl.available = new SimpleStringProperty(((Boolean) value) ? "YES" : "NO");
-                        break;
-                    case 6:
-//                        bl.setBorrowed((String)value);
-                        if(value == null || (Integer)value == 0)
-                        {
-                            bl.borrowed = new SimpleStringProperty("-- NONE --");
-                        }else
-                        {
-                            bl.borrowed = new SimpleStringProperty((String) value);
-                        }
-
-                        break;
-                    case 7:
-//                        bl.setBookshelf((String) value);
-                        if(value == null || ((String) value).isEmpty())
-                        {
-                            bl.bookshelf = new SimpleStringProperty("-- NOT AVAILABLE --");
-                        }else
-                        {
-                            bl.bookshelf = new SimpleStringProperty((String) value);
-                        }
-
-                        break;
-                    case 8:
-//                        bl.setShelf((Integer) value);
-                        if(value == null || (Integer) value == 0)
-                        {
-                            bl.shelf = new SimpleStringProperty("-- NOT AVAILABLE --");
-                        }else
-                        {
-                            bl.shelf = new SimpleStringProperty(value.toString());
-                        }
-
-                        break;
-                }
-
-                i++;
-
+            bl.id = new SimpleStringProperty(objArray[0].toString());
+            bl.title = new SimpleStringProperty((String) objArray[1]);
+            bl.author = new SimpleStringProperty((String) objArray[2]);
+            bl.publisher = new SimpleStringProperty((String) objArray[3]);
+            bl.category = new SimpleStringProperty((String) objArray[4]);
+            bl.available = new SimpleStringProperty(((Boolean) objArray[5]) ? "YES" : "NO");
+            if(objArray[6] == null)
+            {
+                bl.borrowed = new SimpleStringProperty("-- NONE --");
+            }else
+            {
+                bl.borrowed = new SimpleStringProperty((String) objArray[6]);
             }
+
+            if(objArray[7] == null || ((String) objArray[7]).isEmpty())
+            {
+                bl.bookshelf = new SimpleStringProperty("-- NOT ASSIGNED --");
+            }else
+            {
+                bl.bookshelf = new SimpleStringProperty((String) objArray[7]);
+            }
+
+            if(objArray[8] == null || (Integer) objArray[8] == 0)
+            {
+                bl.shelf = new SimpleStringProperty("-- NOT ADDED --");
+            }else
+            {
+                bl.shelf = new SimpleStringProperty(objArray[8].toString());
+            }
+
             observableList.add(bl);
         }
         return observableList;
@@ -177,140 +142,19 @@ public class DevTools {
         ObservableList<UserListItem> observableList = FXCollections.observableArrayList();
         for (Object[] objArray : list) {
             UserListItem ul = new UserListItem();
-            int i = 0;
-            for (Object value : objArray) {
-                switch(i)
-                {
-                    case 0:
-//                        bl.setId((Integer) value);
-                        ul.id = new SimpleStringProperty(value.toString());
-                        break;
-                    case 1:
-//                        bl.setTitle((String) value);
-                        ul.role = new SimpleStringProperty((String) value);
-                        break;
-                    case 2:
-//                        bl.setAuthor((String) value);
-                        ul.name = new SimpleStringProperty((String) value);
-                        break;
-                    case 3:
-//                        bl.setPublisher((String) value);
-                        ul.email = new SimpleStringProperty((String) value);
-                        break;
-                    case 4:
-//                        bl.setCategory((String) value);
-                        ul.username = new SimpleStringProperty((String) value);
-                        break;
-                    case 5:
-//                        bl.setAvailable((Boolean)value);
-                        ul.password =  new SimpleStringProperty((String) value);
-                        break;
-                    case 6:
-                        ul.fine =  new SimpleStringProperty(value.toString());
-                        break;
+            ul.id = new SimpleStringProperty(objArray[0].toString());
+            ul.role = new SimpleStringProperty((String) objArray[1]);
+            ul.name = new SimpleStringProperty((String) objArray[2]);
+            ul.email = new SimpleStringProperty((String) objArray[3]);
+            ul.username = new SimpleStringProperty((String) objArray[4]);
+            ul.password =  new SimpleStringProperty((String) objArray[5]);
+            ul.fine =  new SimpleStringProperty(objArray[6].toString());
 
-                }
-
-                i++;
-
-            }
             observableList.add(ul);
         }
         return observableList;
     }
 
-//    public class BookListItem {
-//        private String id;
-//        private String title;
-//        private String author;
-//        private String publisher;
-//        private String category;
-//        private String available;
-//        private String borrowed;
-//        private String bookshelf;
-//        private String shelf;
-//
-//        // Getters
-//        public String getId() {
-//            return id;
-//        }
-//
-//        public void setId(int id) {
-//            this.id = String.valueOf(id);
-//        }
-//
-//        public String getTitle() {
-//            return title;
-//        }
-//
-//        public void setTitle(String title) {
-//            this.title = title;
-//        }
-//
-//        public String getAuthor() {
-//            return author;
-//        }
-//
-//        public void setAuthor(String author) {
-//            this.author = author;
-//        }
-//
-//        public String getPublisher() {
-//            return publisher;
-//        }
-//
-//        public void setPublisher(String publisher) {
-//            this.publisher = publisher;
-//        }
-//
-//        public String getCategory() {
-//            return category;
-//        }
-//
-//        public void setCategory(String category) {
-//            this.category = category;
-//        }
-//
-//        public String isAvailable() {
-//            return available;
-//        }
-//
-//        public void setAvailable(Boolean available) {
-//            if(available)
-//            {
-//                this.available = "YES";
-//            }else
-//            {
-//                this.available = "NO";
-//            }
-//        }
-//
-//        public String getBorrowed() {
-//            return borrowed;
-//        }
-//
-//        public void setBorrowed(String borrowed) {
-//            this.borrowed = borrowed;
-//        }
-//
-//        public String getBookshelf() {
-//            return bookshelf;
-//        }
-//
-//        public void setBookshelf(String bookshelf) {
-//            this.bookshelf = bookshelf;
-//        }
-//
-//        public String getShelf() {
-//            return shelf;
-//        }
-//
-//        public void setShelf(int shelf) {
-//            this.shelf = String.valueOf(shelf);
-//        }
-//
-//
-//    }
     public static class BookListItem {
         StringProperty id = new SimpleStringProperty("");
         StringProperty title = new SimpleStringProperty("");

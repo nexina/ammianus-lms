@@ -216,6 +216,9 @@ public class LibrarianUI {
         getUserList();
         getBookList();
 
+        doClearSearchField();
+        doUserClearSearchField();
+
         librarian_bookCount.setText(String.valueOf(bookListViewItems.size()));
         librarian_userCount.setText(String.valueOf(userListViewItems.size()));
         bookListViewItems.addListener((ListChangeListener<DevTools.BookListItem>) change -> {
@@ -269,5 +272,9 @@ public class LibrarianUI {
 
     public void removeUserUI(ActionEvent event) throws IOException{
         dt.createNewUI("remove_users.fxml", "Remove Users", 580, 640);
+    }
+
+    public void movebookUI(ActionEvent event) throws IOException{
+        dt.createNewUI("move_books.fxml", "Move Book", 600, 580);
     }
 }

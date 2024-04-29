@@ -67,7 +67,7 @@ public class UpdateFine {
 
     public void checkFine()
     {
-        String getFineQuery = "SELECT * FROM users WHERE username ='" + fine_usernameTF.getText() +"'";
+        String getFineQuery = "SELECT * FROM users WHERE username ='" + fine_usernameTF.getText() +"' AND role = Patron;";
         user = db.queryView(getFineQuery);
 
         if(user.isEmpty())
@@ -107,7 +107,7 @@ public class UpdateFine {
         addFine();
         payFine();
 
-        String updateQuery = "UPDATE users SET fine = "+newFine+" WHERE username='"+username+"'";
+        String updateQuery = "UPDATE users SET fine = "+newFine+" WHERE username='"+username+"' AND role = Patron";
         int res = db.query(updateQuery);
 
         if(res == 1)
