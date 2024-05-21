@@ -85,8 +85,6 @@ public class LibraryStaffUI {
     @FXML
     private TableColumn<DevTools.UserListItem, String> usernameColumn;
     @FXML
-    private TableColumn<DevTools.UserListItem, String> passwordColumn;
-    @FXML
     private TableColumn<DevTools.UserListItem, String> fineColumn;
 
     String patronRoleName = "Patron";
@@ -134,7 +132,6 @@ public class LibraryStaffUI {
         nameColumn.setCellValueFactory(data -> data.getValue().nameProperty());
         emailColumn.setCellValueFactory(data -> data.getValue().emailProperty());
         usernameColumn.setCellValueFactory(data -> data.getValue().usernameProperty());
-        passwordColumn.setCellValueFactory(data -> data.getValue().passwordProperty());
         fineColumn.setCellValueFactory(data -> data.getValue().fineProperty());
 
         userListViewItems.addListener((ListChangeListener<DevTools.UserListItem>) change -> {

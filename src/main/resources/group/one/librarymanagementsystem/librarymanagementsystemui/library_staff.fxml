@@ -237,7 +237,6 @@
                                                       <TableColumn fx:id="nameColumn" prefWidth="177.5999755859375" text="Name" />
                                                       <TableColumn fx:id="emailColumn" minWidth="0.0" prefWidth="191.2000732421875" text="E-mail" />
                                                       <TableColumn fx:id="usernameColumn" prefWidth="116.79998779296875" text="Username" />
-                                                      <TableColumn fx:id="passwordColumn" prefWidth="111.99993896484375" text="Password" />
                                                       <TableColumn fx:id="fineColumn" prefWidth="106.40008544921875" text="Fine" />
                                                    </columns>
                                                    <columnResizePolicy>

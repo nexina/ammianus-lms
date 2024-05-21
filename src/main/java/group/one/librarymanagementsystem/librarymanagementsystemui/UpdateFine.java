@@ -42,6 +42,8 @@ public class UpdateFine {
     @FXML
     private Label fine_usernameError;
     @FXML
+    private Label userfine_lbl;
+    @FXML
     private VBox fine_entryBox;
 
     List<Object[]> user;
@@ -67,7 +69,7 @@ public class UpdateFine {
 
     public void checkFine()
     {
-        String getFineQuery = "SELECT * FROM users WHERE username ='" + fine_usernameTF.getText() +"' AND role = Patron;";
+        String getFineQuery = "SELECT * FROM users WHERE username ='" + fine_usernameTF.getText() +"';";
         user = db.queryView(getFineQuery);
 
         if(user.isEmpty())
@@ -83,9 +85,8 @@ public class UpdateFine {
             fine_payAmount.setText("0");
             fine_addFine.setText("0");
 
-            fine_previousFine.setText(currentFine.toString() + " TK");
-
             username = fine_usernameTF.getText();
+            userfine_lbl.setText(username + "'s Fine: ");
         }
     }
 
@@ -103,11 +104,10 @@ public class UpdateFine {
 
     public void updateFine()
     {
-
         addFine();
         payFine();
 
-        String updateQuery = "UPDATE users SET fine = "+newFine+" WHERE username='"+username+"' AND role = Patron";
+        String updateQuery = "UPDATE users SET fine = "+newFine+" WHERE username='"+username+"' ;";
         int res = db.query(updateQuery);
 
         if(res == 1)
@@ -116,6 +116,13 @@ public class UpdateFine {
             currentFine = newFine;
             fine_userAmount.setText(currentFine.toString() + " TK");
 
+            fine_payAmount.setText("0");
+            fine_addFine.setText("0");
+            fine_finePaid.setText("Fine Paid");
+            fine_fineAdded.setText("Add Fine");
+            fine_totalFine.setText("Total");
+            fine_previousFine.setText("Previous Fine");
+
         }else
         {
             showusrntfndAnim("Failed to Update the fine");
@@ -123,36 +130,62 @@ public class UpdateFine {
 
     }
 
-    public void addFine()
+    public void changeFineView()
     {
         if (fine_addFine.getText().isEmpty())
         {
             fine_addFine.setText("0");
         }
 
-        BigInteger x = new BigInteger(fine_addFine.getText());
-        newFine = newFine.add(x);
-
-        fine_fineAdded.setText(x.toString() + "TK");
-        fine_totalFine.setText(newFine.toString() + "TK");
-    }
-
-    public void payFine() {
         if (fine_payAmount.getText().isEmpty())
         {
             fine_payAmount.setText("0");
         }
+
+        BigInteger x = new BigInteger(fine_addFine.getText());
+        BigInteger y = new BigInteger(fine_payAmount.getText());
+
+        if (y.compareTo(newFine) > 0)
+        {
+            showusrntfndAnim("Paid fine amount is greater than current fine !");
+            fine_finePaid.setText("0 TK");
+            fine_payAmount.setText("0");
+            y = BigInteger.valueOf(0);
+
+        }else{
+            fine_finePaid.setText(y.toString() + "TK");
+        }
+
+        fine_fineAdded.setText(x.toString() + "TK");
+
+
+        BigInteger res = new BigInteger(currentFine.toString());
+        res = res.add(x);
+        res = res.subtract(y);
+        fine_totalFine.setText(res + "TK");
+        fine_previousFine.setText(currentFine.toString() + " TK");
+    }
+
+    public void addFine()
+    {
+
+
+        BigInteger x = new BigInteger(fine_addFine.getText());
+        newFine = newFine.add(x);
+    }
+
+    public void payFine() {
+
 
         BigInteger x = new BigInteger(fine_payAmount.getText());
 
         if (x.compareTo(newFine) > 0)
         {
             showusrntfndAnim("Paid fine amount is greater than current fine !");
+            fine_finePaid.setText("0 TK");
         }else
         {
             newFine = newFine.subtract(x);
-            fine_finePaid.setText(x.toString() + "TK");
-            fine_totalFine.setText(newFine.toString() + "TK");
         }
 
 

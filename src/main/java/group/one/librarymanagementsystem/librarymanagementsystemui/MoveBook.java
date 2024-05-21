@@ -70,6 +70,7 @@ public class MoveBook {
             timeline.play();
             String updateQuery = "UPDATE books SET bookshelf = '"+ new_bookshelf +"', shelf="+ new_shelfno +" WHERE id="+current_bookid+";";
             db.query(updateQuery);
+            bookexist_vbox.setVisible(false);
         }else{
             success.setVisible(false);
             found_bookid = (Integer)existingBook.get(0)[0];
@@ -101,6 +102,7 @@ public class MoveBook {
             }
         }));
         timeline.play();
+        bookexist_vbox.setVisible(false);
     }
 
 }

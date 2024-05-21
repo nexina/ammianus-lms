@@ -16,7 +16,7 @@
    <children>
       <StackPane prefHeight="672.0" prefWidth="755.0">
          <children>
-            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="477.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="507.0">
+            <Rectangle arcHeight="20.0" arcWidth="20.0" fill="WHITE" height="544.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="507.0">
                <effect>
                   <DropShadow offsetY="5.0">
                      <color>
@@ -25,7 +25,7 @@
                   </DropShadow>
                </effect>
             </Rectangle>
-            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="478.0" prefWidth="513.0">
+            <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="542.0" prefWidth="514.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="21.0" prefWidth="295.0">
                      <children>
@@ -68,7 +68,7 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="20.0" prefWidth="110.0" text="User Fine:" textAlignment="CENTER">
+                              <Label fx:id="userfine_lbl" alignment="CENTER" prefHeight="20.0" prefWidth="110.0" text="User Fine:" textAlignment="CENTER">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -82,6 +82,7 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="33.0" prefWidth="295.0">
                            <children>
+                              <Label text="User Paid:" />
                               <TextField fx:id="fine_payAmount" promptText="Enter Pay Amount">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -89,14 +90,11 @@
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin></TextField>
-                              <Button mnemonicParsing="false" onAction="#payFine" text="Pay Fine">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding></Button>
                            </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="33.0" prefWidth="295.0">
                            <children>
+                              <Label text="Fine user: " />
                               <TextField fx:id="fine_addFine" promptText="Enter Fine">
                                  <padding>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -104,12 +102,13 @@
                                  <HBox.margin>
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                  </HBox.margin></TextField>
-                              <Button mnemonicParsing="false" onAction="#addFine" text="Add Fine">
-                                 <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </padding></Button>
                            </children>
                         </HBox>
+                        <Button mnemonicParsing="false" onAction="#changeFineView" text="Calculate Fine">
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </Button>
                         <HBox alignment="CENTER" prefHeight="26.0" prefWidth="513.0" spacing="10.0">
                            <children>
                               <Label prefHeight="26.0" prefWidth="75.0" text="Current Fine:" />

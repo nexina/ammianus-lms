@@ -119,7 +119,7 @@ public class reEntryBooks {
 
         ava= available.isSelected();
 
-        int res = db.query("UPDATE books SET available="+ava+", bookshelf='"+bshelf+"', shelf="+Integer.parseInt(shelf)+" WHERE id ="+bid+";");
+        int res = db.query("UPDATE books SET available="+ava+", bookshelf='"+bshelf+"', shelf="+Integer.parseInt(shelf)+",borrowed='' WHERE id ="+bid+";");
         if(res == -1)
         {
             updateerror.setVisible(true);

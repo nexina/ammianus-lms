@@ -47,7 +47,7 @@
             </Label>
          </children>
       </VBox>
-      <VBox fx:id="librarian_info" alignment="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="295.0" prefWidth="600.0">
+      <VBox fx:id="librarian_info" alignment="CENTER" disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="295.0" prefWidth="600.0" visible="false">
          <children>
             <Label text="Are you sure you want to delete this book ?" />
             <GridPane hgap="10.0" vgap="20.0">

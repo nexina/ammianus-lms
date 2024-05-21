@@ -267,7 +267,7 @@ public class LibrarianUI {
     }
 
     public void updateUserFineUI(ActionEvent event) throws IOException{
-        dt.createNewUI("fine_info.fxml", "Update Fine", 520, 540);
+        dt.createNewUI("fine_info.fxml", "Update Fine", 520, 560);
     }
 
     public void removeUserUI(ActionEvent event) throws IOException{

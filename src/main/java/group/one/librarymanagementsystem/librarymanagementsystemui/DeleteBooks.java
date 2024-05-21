@@ -94,6 +94,8 @@ public class DeleteBooks {
                 System.out.println(selcetedBook.get(0)[8].toString());
 
                 id = Integer.parseInt(librarian_bookID_txtf.getText());
+
+                librarian_info.setVisible(true);
             }
         }
     }
@@ -142,6 +144,16 @@ public class DeleteBooks {
                 }
             }));
             timeline.play();
+
+        librarian_bookTitle.clear();
+        librarian_bookAuthor.clear();
+        librarian_bookPublisher.clear();
+        librarian_bookCategory.clear();
+        librarian_bookAvailable.setSelected(false);
+        librarian_bookshelfID.clear();
+        librarian_bookShelfNo.clear();
+
+        librarian_info.setVisible(false);
 
     }
 
