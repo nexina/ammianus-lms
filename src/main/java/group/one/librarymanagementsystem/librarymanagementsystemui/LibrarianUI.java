@@ -247,15 +247,19 @@ public class LibrarianUI {
     }
 
     public void addBookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("add_books.fxml", "Add Books", 520, 310);
+        dt.createNewUI("add_books.fxml", "Add Books", 730, 486);
     }
 
     public void updateBookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("update_books.fxml", "Update Books", 520, 540);
+        dt.createNewUI("update_books.fxml", "Update Books", 600, 644);
+    }
+
+    public void movebookUI(ActionEvent event) throws IOException{
+        dt.createNewUI("move_books.fxml", "Move Book", 600, 730);
     }
 
     public void removeBookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("remove_books.fxml", "Remove Books", 520, 540);
+        dt.createNewUI("remove_books.fxml", "Remove Books", 600, 674);
     }
 
     public void addUserUI(ActionEvent event) throws IOException{
@@ -274,7 +278,9 @@ public class LibrarianUI {
         dt.createNewUI("remove_users.fxml", "Remove Users", 580, 640);
     }
 
-    public void movebookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("move_books.fxml", "Move Book", 600, 580);
+    public void settingsUI(ActionEvent event) throws IOException{
+        dt.createNewUI("settings.fxml", "Settings", 600, 400);
     }
+
+
 }

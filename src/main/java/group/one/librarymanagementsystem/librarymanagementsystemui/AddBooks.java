@@ -20,7 +20,13 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 import java.util.regex.Pattern;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 import static group.one.librarymanagementsystem.librarymanagementsystemui.LibrarianUI.bookListViewItems;
+import group.one.librarymanagementsystem.librarymanagementsystemui.LibraryStaffUI;
 
 public class AddBooks {
     DevTools dt = new DevTools();
@@ -55,17 +61,12 @@ public class AddBooks {
         };
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         librarian_bookShelfNo.setTextFormatter(textFormatter);
-
-
-
-
     }
 
     public void addButton()
     {
         addbooks_error_lbl.setVisible(true);
         addbooks_error_lbl.setTextFill(Color.RED);
-
 
         if (librarian_bookTitle.getText().isEmpty()) {
             addbooks_error_lbl.setText("Book Title is empty!");
@@ -79,7 +80,8 @@ public class AddBooks {
             addbooks_error_lbl.setText("Shelf not found!");
         }else if (librarian_bookshelfID.getText().isEmpty()) {
             addbooks_error_lbl.setText("BookShelf not found!");
-        }else
+        }
+        else
         {
             String title = librarian_bookTitle.getText();
             String author = librarian_bookAuthor.getText();
@@ -89,57 +91,51 @@ public class AddBooks {
             String bookshelf = librarian_bookshelfID.getText();
             int shelf = Integer.parseInt(librarian_bookShelfNo.getText());
 
-            String insertQuery = "INSERT INTO books (title, author, publisher, category, available, bookshelf, shelf) " +
-                    "VALUES ('" + title + "', '" + author + "', '" + publisher + "', '" + category + "', '" + available + "', '" + bookshelf + "', '" + shelf + "')";
+            String insertQuery = "INSERT INTO books (title, author, publisher, category, available, bookshelf, shelf) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            int response = db.query(insertQuery, title, author, publisher, category, available, bookshelf, shelf);
 
-            int response = db.query(insertQuery);
             if(response == -1)
             {
-                addbooks_error_lbl.setText("Book could not be added");
+                Utils.ShowMessage(addbooks_error_lbl, "Book could not be added", 5.0, Color.RED);
             }else
             {
-                addbooks_error_lbl.setText("Book added succesfully!");
-                addbooks_error_lbl.setTextFill(Color.GREEN);
-            }
+                Utils.ShowMessage(addbooks_error_lbl, "Book added succesfully!", 5.0, Color.GREEN);
 
+                String findRowQuery = "SELECT id, borrowed FROM books WHERE title = ? AND author = ? AND publisher = ? AND category = ? AND available = ? AND bookshelf = ? AND shelf = ?";
+                List<Object[]> getRow = db.queryView(findRowQuery, title, author, publisher, category, available, bookshelf, shelf);
 
-            String findRowQuery = "SELECT id, borrowed FROM books WHERE title = '" + title + "' AND author = '" + author + "' AND publisher = '" + publisher + "' AND category = '" + category + "' AND available = " + available + " AND bookshelf = '" + bookshelf + "' AND shelf = '" + shelf + "'";
-            List<Object[]> getRow = db.queryView(findRowQuery);
+                DevTools.BookListItem bt = new DevTools.BookListItem();
 
-            DevTools.BookListItem bt = new DevTools.BookListItem();
+                if (!getRow.isEmpty()) {
+                    bt.id = new SimpleStringProperty(getRow.get(0)[0].toString());
+                    String x = (String) getRow.get(0)[1];
+                    if(x==null || x.isEmpty())
+                    {
+                        bt.borrowed = new SimpleStringProperty("-- NONE --");
+                    }else
+                    {
+                        bt.borrowed = new SimpleStringProperty(x);
+                    }
+                }
 
-            if (!getRow.isEmpty()) {
-                bt.id = new SimpleStringProperty(getRow.get(0)[0].toString());
-                String x = (String) getRow.get(0)[1];
-                if(x==null || x.isEmpty())
+                bt.title = new SimpleStringProperty(title);
+                bt.author = new SimpleStringProperty(author);
+                bt.publisher = new SimpleStringProperty(publisher);
+                bt.category = new SimpleStringProperty(category);
+                bt.available = new SimpleStringProperty((available == 1) ? "YES" : "NO");
+                bt.bookshelf = new SimpleStringProperty(bookshelf);
+                bt.shelf = new SimpleStringProperty(String.valueOf(shelf));
+
+                if (bookListViewItems != null)
                 {
-                    bt.borrowed = new SimpleStringProperty("--NONE--");
-                }else
+                    bookListViewItems.add(bt);
+                }else if(LibraryStaffUI.bookListViewItems != null)
                 {
-                    bt.borrowed = new SimpleStringProperty(x);
+                    LibraryStaffUI.bookListViewItems.add(bt);
                 }
             }
 
 
-
-            bt.title = new SimpleStringProperty(title);
-            bt.author = new SimpleStringProperty(author);
-            bt.publisher = new SimpleStringProperty(publisher);
-            bt.category = new SimpleStringProperty(category);
-            bt.available = new SimpleStringProperty((available == 1) ? "YES" : "NO");
-            bt.bookshelf = new SimpleStringProperty(bookshelf);
-            bt.shelf = new SimpleStringProperty(String.valueOf(shelf));
-            bookListViewItems.add(bt);
-
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    addbooks_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
         }
     }
 

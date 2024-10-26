@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jdk.jshell.execution.Util;
 
 import java.util.List;
 import java.util.Objects;
@@ -57,7 +58,7 @@ public class UpdateUsers {
     public void checkBook() {
         if(librarian_userID_txtf.getText().isEmpty())
         {
-            showbkntfndAnim("User ID is empty!");
+            Utils.ShowMessage(librarian_usrntfnd_ere_lbl,"User ID is empty!",5.0, Color.RED);
         }else
         {
             userId = Integer.parseInt(librarian_userID_txtf.getText());
@@ -66,7 +67,7 @@ public class UpdateUsers {
 
             if(selectedUser.isEmpty())
             {
-                showbkntfndAnim("User does not exist!");
+                Utils.ShowMessage(librarian_usrntfnd_ere_lbl,"User does not exist!",5.0, Color.RED);
 
                 librarian_info.setDisable(true);
                 librarian_updateButton.setDisable(true);
@@ -94,19 +95,6 @@ public class UpdateUsers {
                 librarian_userPassword.setText((String) selectedUser.get(0)[5]);
             }
         }
-    }
-
-    private void showbkntfndAnim(String text) {
-        librarian_usrntfnd_ere_lbl.setVisible(true);
-        librarian_usrntfnd_ere_lbl.setText(text);
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                librarian_usrntfnd_ere_lbl.setVisible(false);
-            }
-        }));
-        timeline.play();
     }
 
     public void updateButton() {
@@ -145,25 +133,14 @@ public class UpdateUsers {
             updateusers_error_lbl.setText("Select a user Role!");
         }else
         {
-            String updateQuery = "UPDATE users SET role = '" + role + "', name = '" + fullname + "', email = '" + email + "', username = '" + username + "', password = '" + password + "' WHERE id =  "+userId+"";
+            String updateQuery = "UPDATE users SET role = ?, name = ?, email = ?, username = ?, password = ? WHERE id = ?";
+            int response = db.query(updateQuery, role, fullname, email, username, password, userId);
 
-            int response = db.query(updateQuery);
-            if(response == -1)
-            {
-                updateusers_error_lbl.setText("User could not be updated");
+            if(response == -1) {
+                Utils.ShowMessage(updateusers_error_lbl, "User could not be updated", 5.0, Color.RED);
             }else {
-                updateusers_error_lbl.setText("User updated succesfully! Refresh the list to see update !");
-                updateusers_error_lbl.setTextFill(Color.GREEN);
+                Utils.ShowMessage(updateusers_error_lbl, "User updated succesfully! Refresh the list to see update !", 5.0, Color.GREEN);
             }
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    updateusers_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
         }
     }
 

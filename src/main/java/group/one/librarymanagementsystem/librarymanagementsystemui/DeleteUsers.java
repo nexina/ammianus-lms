@@ -10,6 +10,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import jdk.jshell.execution.Util;
 
 import java.util.List;
 import java.util.Objects;
@@ -54,54 +55,37 @@ public class DeleteUsers {
     public void checkBook() {
         if(librarian_userID_txtf.getText().isEmpty())
         {
-            showbkntfndAnim("User ID is empty!");
+            Utils.ShowMessage(librarian_usrntfnd_ere_lbl, "User ID is empty!", 5.0, Color.RED);
+            return;
+        }
+
+        userId = Integer.parseInt(librarian_userID_txtf.getText());
+        String query = "SELECT * FROM users WHERE id =" + userId;
+        selectedUser = db.queryView(query);
+
+        if(selectedUser.isEmpty())
+        {
+            Utils.ShowMessage(librarian_usrntfnd_ere_lbl, "User does not exist!", 5.0, Color.RED);
+            librarian_updateButton.setDisable(true);
         }else
         {
-            userId = Integer.parseInt(librarian_userID_txtf.getText());
-            String query = "SELECT * FROM users WHERE id =" + userId;
-            selectedUser = db.queryView(query);
-
-            if(selectedUser.isEmpty())
+            librarian_updateButton.setDisable(false);
+            if(Objects.equals((String) selectedUser.get(0)[1], "Librarian"))
             {
-                showbkntfndAnim("User does not exist!");
-
-                librarian_updateButton.setDisable(true);
+                librarian_userRole.getSelectionModel().select(0);
+            }else if(Objects.equals((String) selectedUser.get(0)[1], "Library Staff"))
+            {
+                librarian_userRole.getSelectionModel().select(1);
             }else
             {
-                librarian_updateButton.setDisable(false);
-
-                System.out.println((String) selectedUser.get(0)[1]);
-
-                if(Objects.equals((String) selectedUser.get(0)[1], "Librarian"))
-                {
-                    librarian_userRole.getSelectionModel().select(0);
-                }else if(Objects.equals((String) selectedUser.get(0)[1], "Library Staff"))
-                {
-                    librarian_userRole.getSelectionModel().select(1);
-                }else
-                {
-                    librarian_userRole.getSelectionModel().select(2);
-                }
-
-                librarian_fullName.setText((String) selectedUser.get(0)[2]);
-                librarian_userEmail.setText((String) selectedUser.get(0)[3]);
-                librarian_userName.setText((String) selectedUser.get(0)[4]);
-                librarian_userPassword.setText((String) selectedUser.get(0)[5]);
+                librarian_userRole.getSelectionModel().select(2);
             }
+
+            librarian_fullName.setText((String) selectedUser.get(0)[2]);
+            librarian_userEmail.setText((String) selectedUser.get(0)[3]);
+            librarian_userName.setText((String) selectedUser.get(0)[4]);
+            librarian_userPassword.setText((String) selectedUser.get(0)[5]);
         }
-    }
-
-    private void showbkntfndAnim(String text) {
-        librarian_usrntfnd_ere_lbl.setVisible(true);
-        librarian_usrntfnd_ere_lbl.setText(text);
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                librarian_usrntfnd_ere_lbl.setVisible(false);
-            }
-        }));
-        timeline.play();
     }
 
     public void deleteButton() {
@@ -145,7 +129,10 @@ public class DeleteUsers {
             int response = db.query(deleteQuery);
             if(response == -1)
             {
-                deleteusers_error_lbl.setText("User could not be deleted");
+                Utils.ShowMessage(deleteusers_error_lbl, "User could not be deleted", 5.0, Color.RED);
+            }else if(response == -1)
+            {
+                Utils.ShowMessage(deleteusers_error_lbl, "User does not exists", 5.0, Color.RED);
             }else {
                 int i = 0;
                 for (DevTools.UserListItem user : userListViewItems) {
@@ -156,18 +143,9 @@ public class DeleteUsers {
                     i++;
                 }
 
-                deleteusers_error_lbl.setText("User deleted succesfully!");
-                deleteusers_error_lbl.setTextFill(Color.GREEN);
+                Utils.ShowMessage(deleteusers_error_lbl, "User deleted succesfully!", 5.0, Color.GREEN);
+                librarian_updateButton.setDisable(true);
             }
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    deleteusers_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
         }
     }
 

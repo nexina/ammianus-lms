@@ -70,68 +70,51 @@ public class UpdateBooks {
     public void checkBook() {
         if(librarian_bookID_txtf.getText().isEmpty())
         {
-            showbkntfndAnim("Book ID is empty!");
+            Utils.ShowMessage(lirarian_bkntfnd_ere_lbl, "Book ID is empty!",5.0, Color.RED);
+            return;
+        }
+
+        int bookId = Integer.parseInt(librarian_bookID_txtf.getText());
+        String query = "SELECT * FROM books WHERE id =" + bookId;
+        selcetedBook = db.queryView(query);
+
+        if(selcetedBook.isEmpty())
+        {
+            Utils.ShowMessage(lirarian_bkntfnd_ere_lbl, "Book does not exist!",5.0, Color.RED);
+
+            librarian_info.setDisable(true);
+            librarian_updateButton.setDisable(true);
         }else
         {
-            int bookId = Integer.parseInt(librarian_bookID_txtf.getText());
-            String query = "SELECT * FROM books WHERE id =" + bookId;
-            selcetedBook = db.queryView(query);
+            librarian_info.setDisable(false);
+            librarian_updateButton.setDisable(false);
 
-            if(selcetedBook.isEmpty())
-            {
-                showbkntfndAnim("Book does not exist!");
+            id = Integer.parseInt(librarian_bookID_txtf.getText());
 
-                librarian_info.setDisable(true);
-                librarian_updateButton.setDisable(true);
-            }else
-            {
-                librarian_info.setDisable(false);
-                librarian_updateButton.setDisable(false);
-
-                id = Integer.parseInt(librarian_bookID_txtf.getText());
-
-                librarian_bookTitle.setText((String) selcetedBook.get(0)[1]);
-                librarian_bookAuthor.setText((String) selcetedBook.get(0)[2]);
-                librarian_bookPublisher.setText((String) selcetedBook.get(0)[3]);
-                librarian_bookCategory.setText((String) selcetedBook.get(0)[4]);
-                librarian_bookAvailable.setSelected((Boolean) selcetedBook.get(0)[5]);
-                librarian_bookshelfID.setText((String) selcetedBook.get(0)[7]);
-                librarian_bookShelfNo.setText(selcetedBook.get(0)[8].toString());
-                System.out.println(selcetedBook.get(0)[8].toString());
-            }
+            librarian_bookTitle.setText((String) selcetedBook.get(0)[1]);
+            librarian_bookAuthor.setText((String) selcetedBook.get(0)[2]);
+            librarian_bookPublisher.setText((String) selcetedBook.get(0)[3]);
+            librarian_bookCategory.setText((String) selcetedBook.get(0)[4]);
+            librarian_bookAvailable.setSelected((Boolean) selcetedBook.get(0)[5]);
+            librarian_bookshelfID.setText((String) selcetedBook.get(0)[7]);
+            librarian_bookShelfNo.setText(selcetedBook.get(0)[8].toString());
         }
-    }
 
-    private void showbkntfndAnim(String text) {
-        lirarian_bkntfnd_ere_lbl.setVisible(true);
-        lirarian_bkntfnd_ere_lbl.setText(text);
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lirarian_bkntfnd_ere_lbl.setVisible(false);
-            }
-        }));
-        timeline.play();
     }
 
     public void updateButton() {
-        updatebooks_error_lbl.setVisible(true);
-        updatebooks_error_lbl.setTextFill(Color.RED);
-
-
         if (librarian_bookTitle.getText().isEmpty()) {
-            updatebooks_error_lbl.setText("Book Title is empty!");
+            Utils.ShowMessage(updatebooks_error_lbl, "Book Title is empty!", 5.0, Color.RED);
         } else if (librarian_bookAuthor.getText().isEmpty()) {
-            updatebooks_error_lbl.setText("Book Author is empty!");
+            Utils.ShowMessage(updatebooks_error_lbl, "Book Author is empty!", 5.0, Color.RED);
         } else if (librarian_bookPublisher.getText().isEmpty()) {
-            updatebooks_error_lbl.setText("Book Publisher is empty!");
+            Utils.ShowMessage(updatebooks_error_lbl, "Book Publisher is empty!", 5.0, Color.RED);
         } else if (librarian_bookCategory.getText().isEmpty()) {
-            updatebooks_error_lbl.setText("Book Category is empty!");
+            Utils.ShowMessage(updatebooks_error_lbl,"Book Category is empty!" , 5.0, Color.RED);
         } else if (librarian_bookshelfID.getText().isEmpty()) {
-            updatebooks_error_lbl.setText("Book Bookshelf is empty!");
+            Utils.ShowMessage(updatebooks_error_lbl, "Book Bookshelf is empty!", 5.0, Color.RED);
         } else if (librarian_bookShelfNo.getText().isEmpty()) {
-            updatebooks_error_lbl.setText("Book Shelf not found!");
+            Utils.ShowMessage(updatebooks_error_lbl, "Book Shelf not found!", 5.0, Color.RED);
         }else
         {
             String title = librarian_bookTitle.getText();
@@ -142,41 +125,16 @@ public class UpdateBooks {
             String bookshelf = librarian_bookshelfID.getText();
             int shelf = Integer.parseInt(librarian_bookShelfNo.getText());
 
-            String updateQuery = "UPDATE books SET title = '" + title + "', author = '" + author + "', publisher = '" + publisher + "', category = '" + category + "', available = '" + available + "', bookshelf = '" + bookshelf + "', shelf = '" + shelf + "' WHERE id = " + id;
+            String updateQuery = "UPDATE books SET title = ?, author = ?, publisher = ?, category = ?, available = ?, bookshelf = ?, shelf = ? WHERE id = ?";
+            int response = db.query(updateQuery, title, author, publisher, category, available, bookshelf, shelf, id);
 
-            int response = db.query(updateQuery);
             if(response == -1)
             {
-                updatebooks_error_lbl.setText("Book could not be added");
+                Utils.ShowMessage(updatebooks_error_lbl, "Book could not be added", 5.0, Color.RED);
             }else
             {
-                updatebooks_error_lbl.setText("Book updated succesfully! Refresh the List to see update !");
-                updatebooks_error_lbl.setTextFill(Color.GREEN);
+                Utils.ShowMessage(updatebooks_error_lbl, "Book updated succesfully! Refresh the List to see update !", 5.0, Color.GREEN);
             }
-
-//            int i = 0;
-//            for (DevTools.BookListItem book : bookListViewItems) {
-//                if (book.idProperty().get().equals(String.valueOf(id))) {
-//                    bookListViewItems.get(i).title = new SimpleStringProperty(title);
-//                    bookListViewItems.get(i).author = new SimpleStringProperty(author);
-//                    bookListViewItems.get(i).publisher = new SimpleStringProperty(publisher);
-//                    bookListViewItems.get(i).category = new SimpleStringProperty(category);
-//                    bookListViewItems.get(i).available = new SimpleStringProperty((available == 1) ? "YES" : "NO");
-//                    bookListViewItems.get(i).bookshelf = new SimpleStringProperty(bookshelf);
-//                    bookListViewItems.get(i).shelf = new SimpleStringProperty(String.valueOf(shelf));
-//                    break;
-//                }
-//                i++;
-//            }
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    updatebooks_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
         }
     }
 

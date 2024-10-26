@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,8 +22,24 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+import org.json.JSONObject;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class DevTools {
     Database db = new Database();
+
+    public static String CONFIG_LOCATION =  Paths.get("").toAbsolutePath().toString()+ "/config.json";
+
+    public static boolean configFileExists() {
+        File configFile = new File(CONFIG_LOCATION);
+
+        return configFile.exists();
+    }
 
     String LoginScreen(int x, String username, String password)
     {
@@ -89,15 +106,6 @@ public class DevTools {
         stage.setScene(scene);
         stage.show();
     }
-//    @FXML
-//    void createUI(ActionEvent event, String filename, String title, int w, int h) throws IOException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(filename));
-//        Scene scene = new Scene(fxmlLoader.load(), w, h);
-//        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//        stage.setTitle(title);
-//        stage.setScene(scene);
-//        stage.show();
-//    }
 
     ObservableList<BookListItem> convertBookToObservableList(List<Object[]> list) {
         ObservableList<BookListItem> observableList = FXCollections.observableArrayList();
@@ -250,6 +258,62 @@ public class DevTools {
         LocalDateTime now = LocalDateTime.now();
         String formattedDateTime = now.format(formatter);
         text.setText(formattedDateTime);
+    }
+
+    public int createConfig(JSONObject jo)
+    {
+        try (FileWriter file = new FileWriter(CONFIG_LOCATION)) {
+            System.out.println(Paths.get("").toAbsolutePath().toString());
+            file.write(jo.toString(4));
+            file.flush();
+            return 1;
+        } catch (IOException e) {
+            return -1;
+        }
+    }
+
+    public static Object getConfig(String s){
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(CONFIG_LOCATION)));
+            JSONObject configObj = new JSONObject(content);
+
+            return configObj.get(s);
+        }catch (IOException e)
+        {
+            return null;
+        }
+    }
+
+    public static void setConfig(String key,  String value){
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(CONFIG_LOCATION)));
+            JSONObject configObj = new JSONObject(content);
+
+            configObj.put(key, value);
+
+            Files.write(Paths.get(CONFIG_LOCATION), configObj.toString(4).getBytes());
+
+
+        }catch (IOException e)
+        {
+
+        }
+    }
+
+    public static void setConfig(String key,  int value){
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(CONFIG_LOCATION)));
+            JSONObject configObj = new JSONObject(content);
+
+            configObj.put(key, value);
+
+            Files.write(Paths.get(CONFIG_LOCATION), configObj.toString(4).getBytes());
+
+
+        }catch (IOException e)
+        {
+
+        }
     }
 }
 

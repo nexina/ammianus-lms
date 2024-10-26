@@ -240,21 +240,22 @@ public class LibraryStaffUI {
     }
 
     public void addPatronUI(ActionEvent event) throws IOException{
-        dt.createNewUI("add_patrons.fxml", "Add Patrons", 520, 310);
+        dt.createNewUI("add_patrons.fxml", "Add Patrons", 600, 372);
     }
+
     public void updateUserFineUI(ActionEvent event) throws IOException{
-        dt.createNewUI("fine_info.fxml", "Update Fine", 520, 540);
+        dt.createNewUI("fine_info.fxml", "Update Fine", 588, 708);
     }
 
     public void reentrybookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("reentry-book.fxml", "Re-Entry Book", 600, 560);
+        dt.createNewUI("reentry-book.fxml", "Re-Entry Book", 600, 746);
     }
 
     public void checkoutbookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("checkout_book.fxml", "Checkout Book", 520, 270);
+        dt.createNewUI("checkout_book.fxml", "Checkout Book", 520, 320);
     }
 
     public void movebookUI(ActionEvent event) throws IOException{
-        dt.createNewUI("move_books.fxml", "Move Book", 600, 580);
+        dt.createNewUI("move_books.fxml", "Move Book", 600, 730);
     }
 }

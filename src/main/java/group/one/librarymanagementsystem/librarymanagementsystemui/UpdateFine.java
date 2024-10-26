@@ -1,17 +1,12 @@
 package group.one.librarymanagementsystem.librarymanagementsystemui;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.VBox;
-import javafx.util.Duration;
+import javafx.scene.paint.Color;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -69,12 +64,17 @@ public class UpdateFine {
 
     public void checkFine()
     {
+        if(fine_usernameTF.getText().isEmpty())
+        {
+            Utils.ShowMessage(fine_usernameError,"Fields can not be empty!", 5.0, Color.RED);
+        }
+
         String getFineQuery = "SELECT * FROM users WHERE username ='" + fine_usernameTF.getText() +"';";
         user = db.queryView(getFineQuery);
 
         if(user.isEmpty())
         {
-            showusrntfndAnim("User not found !");
+            Utils.ShowMessage(fine_usernameError,"User not found !", 5.0, Color.RED);
         }else
         {
             fine_entryBox.setDisable(false);
@@ -90,18 +90,6 @@ public class UpdateFine {
         }
     }
 
-    private void showusrntfndAnim(String text) {
-        fine_usernameError.setVisible(true);
-        fine_usernameError.setText(text);
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                fine_usernameError.setVisible(false);
-            }
-        }));
-        timeline.play();
-    }
-
     public void updateFine()
     {
         addFine();
@@ -110,9 +98,8 @@ public class UpdateFine {
         String updateQuery = "UPDATE users SET fine = "+newFine+" WHERE username='"+username+"' ;";
         int res = db.query(updateQuery);
 
-        if(res == 1)
-        {
-            showusrntfndAnim("Successfully Updated "+username+" Fine! Refresh list to check update!");
+        if(res == 1) {
+            Utils.ShowMessage(fine_usernameError, "Successfully Updated "+username+" Fine! Refresh list to check update!", 5.0, Color.GREEN);
             currentFine = newFine;
             fine_userAmount.setText(currentFine.toString() + " TK");
 
@@ -122,23 +109,18 @@ public class UpdateFine {
             fine_fineAdded.setText("Add Fine");
             fine_totalFine.setText("Total");
             fine_previousFine.setText("Previous Fine");
-
-        }else
-        {
-            showusrntfndAnim("Failed to Update the fine");
+        }else {
+            Utils.ShowMessage(fine_usernameError, "Failed to Update the fine", 5.0 , Color.GREEN);
         }
-
     }
 
     public void changeFineView()
     {
-        if (fine_addFine.getText().isEmpty())
-        {
+        if (fine_addFine.getText().isEmpty()) {
             fine_addFine.setText("0");
         }
 
-        if (fine_payAmount.getText().isEmpty())
-        {
+        if (fine_payAmount.getText().isEmpty()) {
             fine_payAmount.setText("0");
         }
 
@@ -147,7 +129,7 @@ public class UpdateFine {
 
         if (y.compareTo(newFine) > 0)
         {
-            showusrntfndAnim("Paid fine amount is greater than current fine !");
+            Utils.ShowMessage(fine_usernameError, "Paid fine amount is greater than current fine !", 5.0, Color.GREEN);
             fine_finePaid.setText("0 TK");
             fine_payAmount.setText("0");
             y = BigInteger.valueOf(0);
@@ -166,34 +148,18 @@ public class UpdateFine {
         fine_previousFine.setText(currentFine.toString() + " TK");
     }
 
-    public void addFine()
-    {
-
-
+    public void addFine() {
         BigInteger x = new BigInteger(fine_addFine.getText());
         newFine = newFine.add(x);
     }
 
     public void payFine() {
-
-
         BigInteger x = new BigInteger(fine_payAmount.getText());
-
-        if (x.compareTo(newFine) > 0)
-        {
-            showusrntfndAnim("Paid fine amount is greater than current fine !");
+        if (x.compareTo(newFine) > 0) {
+            Utils.ShowMessage(fine_usernameError, "Paid fine amount is greater than current fine !", 5.0, Color.GREEN);
             fine_finePaid.setText("0 TK");
-        }else
-        {
+        }else {
             newFine = newFine.subtract(x);
         }
-
-
-
     }
-
 }
-
-
-
-

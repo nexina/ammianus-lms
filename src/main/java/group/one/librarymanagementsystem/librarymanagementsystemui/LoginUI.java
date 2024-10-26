@@ -9,7 +9,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jdk.jshell.execution.Util;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -37,12 +39,8 @@ public class LoginUI {
         String password_input = login_pw_input.getText();
         if(des_ind == -1 || Objects.equals(username_input, "") || Objects.equals(password_input, ""))
         {
-            login_error_lbl.setVisible(true);
-            login_error_lbl.setText("Designation, Username or Password can not be empty !");
+            Utils.ShowMessage(login_error_lbl, "Role, Username or Password can not be empty !", 5.0, Color.RED);
             return;
-        }else
-        {
-            login_error_lbl.setVisible(false);
         }
 
         String username = dt.LoginScreen(des_ind, username_input, password_input);
@@ -65,7 +63,7 @@ public class LoginUI {
                     des_filepath = "librarian.fxml";
                     des_title = "Librarian Dashboard";
                     fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
-                    scene = new Scene(fxmlLoader.load(), 985, 560);
+                    scene = new Scene(fxmlLoader.load(), 1200, 720);
                     librarianController = fxmlLoader.getController();
                     librarianController.initData(username);
                     stage.setTitle(des_title);
@@ -76,7 +74,7 @@ public class LoginUI {
                     des_filepath = "library_staff.fxml";
                     des_title = "Library Staff Dashboard";
                     fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
-                    scene = new Scene(fxmlLoader.load(), 985, 560);
+                    scene = new Scene(fxmlLoader.load(), 1200, 720);
                     librarystaffController = fxmlLoader.getController();
                     librarystaffController.initData(username);
                     stage.setTitle(des_title);
@@ -87,7 +85,7 @@ public class LoginUI {
                     des_filepath = "patron.fxml";
                     des_title = "Patron Dashboard";
                     fxmlLoader = new FXMLLoader(getClass().getResource(des_filepath));
-                    scene = new Scene(fxmlLoader.load(), 985, 560);
+                    scene = new Scene(fxmlLoader.load(), 1200, 720);
                     patronController = fxmlLoader.getController();
                     patronController.initData(username);
                     stage.setTitle(des_title);
@@ -97,12 +95,8 @@ public class LoginUI {
                 default:
                     System.exit(0);
             }
-
-
-        }else
-        {
-            login_error_lbl.setVisible(true);
-            login_error_lbl.setText("Username and Password doesn't match or user couldn't be found. Contact Administrator");
+        }else {
+            Utils.ShowMessage(login_error_lbl, "Username and Password doesn't match or user couldn't be found. Contact Administrator", 5.0, Color.RED);
         }
 
     }

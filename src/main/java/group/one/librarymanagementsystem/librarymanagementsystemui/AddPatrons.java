@@ -37,12 +37,10 @@ public class AddPatrons {
     private Label addusers_error_lbl;
 
     public void initialize() {
-
         librarian_userRole.getItems().addAll("Librarian", "Library Staff", "Patron");
     }
 
-    public void addButton()
-    {
+    public void addButton() {
         addusers_error_lbl.setVisible(true);
         addusers_error_lbl.setTextFill(Color.RED);
         String fullname = librarian_fullName.getText();
@@ -59,21 +57,20 @@ public class AddPatrons {
             addusers_error_lbl.setText("Password is empty!");
         } else if (email.isEmpty()) {
             addusers_error_lbl.setText("E-mail is empty!");
-        } else if (role.isEmpty()) {
-            addusers_error_lbl.setText("Select a user Role!");
-        }else
-        {
+        } else if (Utils.containsSpacesAndSpecialChars(username)) {
+            addusers_error_lbl.setText("Username must not contain space or special character");
+        } else if(!Utils.isValidEmail(email)) {
+            addusers_error_lbl.setText("The email is not valid");
+        }
+        else {
             String insertQuery = "INSERT INTO users (role, name, email, username, password) " +
                     "VALUES ('" + role + "', '" + fullname + "', '" + email + "', '" + username + "', '" + password + "')";
 
             int response = db.query(insertQuery);
-            if(response == -1)
-            {
-                addusers_error_lbl.setText("User could not be added");
-            }else
-            {
-                addusers_error_lbl.setText("User added succesfully!");
-                addusers_error_lbl.setTextFill(Color.GREEN);
+            if(response == -1) {
+                Utils.ShowMessage(addusers_error_lbl, "User could not be added", 5.0, Color.RED);
+            }else {
+                Utils.ShowMessage(addusers_error_lbl, "User added succesfully!", 5.0, Color.GREEN);
 
                 String findRowQuery = "SELECT id FROM users WHERE username = '" + username + "'";
                 List<Object[]> getRow = db.queryView(findRowQuery);
@@ -92,20 +89,10 @@ public class AddPatrons {
                 ut.fine = new SimpleStringProperty("0");
                 userListViewItems.add(ut);
             }
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    addusers_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
         }
     }
 
-    public void cancelButton(ActionEvent event)
-    {
+    public void cancelButton(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.close();
     }

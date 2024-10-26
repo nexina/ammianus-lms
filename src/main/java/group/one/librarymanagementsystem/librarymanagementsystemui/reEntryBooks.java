@@ -62,19 +62,22 @@ public class reEntryBooks {
     String prev_shelf;
     public void checkBook()
     {
+        if(bookid.getText().isEmpty() || busername.getText().isEmpty())
+        {
+            Utils.ShowMessage(usrerror, "Fields can not be empty!", 5.0, Color.RED);
+            return;
+        }
         bid = Integer.parseInt(bookid.getText());
         buser = busername.getText();
         prev_ava = false;
-        System.out.println(bid);
-        System.out.println(buser);
 
         x = db.queryView("SELECT available, bookshelf, shelf FROM books WHERE id ="+bid+" AND borrowed='"+buser+"';");
         if(x.isEmpty())
         {
-            usrerror.setVisible(true);
+            Utils.ShowMessage(usrerror, "The user may not exists or the borrower does not have that book !", 5.0, Color.RED);
         }else
         {
-            usrerror.setVisible(false);
+            Utils.ShowMessage(usrerror, "User has that book !", 5.0, Color.GREEN);
             for(Object[] item: x)
             {
                 prev_ava = (Boolean) item[0];
@@ -99,8 +102,6 @@ public class reEntryBooks {
 
     public void updateBook()
     {
-        updateerror.setTextFill(Color.RED);
-        updateerror.setVisible(false);
         String bshelf;
         String shelf;
         Boolean ava;
@@ -119,24 +120,20 @@ public class reEntryBooks {
 
         ava= available.isSelected();
 
-        int res = db.query("UPDATE books SET available="+ava+", bookshelf='"+bshelf+"', shelf="+Integer.parseInt(shelf)+",borrowed='' WHERE id ="+bid+";");
+        int res = db.query("UPDATE books SET available="+ava+", bookshelf='"+bshelf+"', shelf="+Integer.parseInt(shelf)+",borrowed='"+"-- NONE --"+"' WHERE id ="+bid+";");
         if(res == -1)
         {
-            updateerror.setVisible(true);
+            Utils.ShowMessage(updateerror, "Something went wrong!", 5.0, Color.RED);
         }else if(res == 0)
         {
-            updateerror.setVisible(true);
-            updateerror.setText("No Book ID Found !");
+            Utils.ShowMessage(updateerror, "No Book ID Found !", 5.0, Color.RED);
         }else
         {
-            updateerror.setVisible(true);
-            updateerror.setText("Book has been added !");
-            updateerror.setTextFill(Color.GREEN);
+            Utils.ShowMessage(updateerror, "Book has been added !", 5.0, Color.GREEN);
 
             prev_ava = ava;
             prev_bookshelf = bshelf;
             prev_shelf = shelf;
-
         }
     }
 

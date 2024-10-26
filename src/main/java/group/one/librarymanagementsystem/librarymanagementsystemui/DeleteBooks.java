@@ -41,7 +41,7 @@ public class DeleteBooks {
     @FXML
     private Label updatebooks_error_lbl;
     @FXML
-    private Label lirarian_bkntfnd_ere_lbl;
+    private Label librarian_bkntfnd_ere_lbl;
 
     @FXML
     private VBox librarian_info;
@@ -64,65 +64,53 @@ public class DeleteBooks {
         };
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
         librarian_bookShelfNo.setTextFormatter(textFormatter);
+
+        updatebooks_error_lbl.setVisible(false);
+        librarian_bkntfnd_ere_lbl.setVisible(false);
     }
 
     public void checkBook() {
         if(librarian_bookID_txtf.getText().isEmpty())
         {
-            showbkntfndAnim("Book ID is empty!");
+            Utils.ShowMessage(librarian_bkntfnd_ere_lbl,"Book ID is empty!", 5.0, Color.RED);
+            return;
+        }
+
+        int bookId = Integer.parseInt(librarian_bookID_txtf.getText());
+        String query = "SELECT * FROM books WHERE id =" + bookId;
+        selcetedBook = db.queryView(query);
+
+        if(selcetedBook.isEmpty())
+        {
+            Utils.ShowMessage(librarian_bkntfnd_ere_lbl,"Book does not exist!", 5.0, Color.RED);
+            librarian_updateButton.setDisable(true);
         }else
         {
-            int bookId = Integer.parseInt(librarian_bookID_txtf.getText());
-            String query = "SELECT * FROM books WHERE id =" + bookId;
-            selcetedBook = db.queryView(query);
+            librarian_updateButton.setDisable(false);
 
-            if(selcetedBook.isEmpty())
-            {
-                showbkntfndAnim("Book does not exist!");
-                librarian_updateButton.setDisable(true);
-            }else
-            {
-                librarian_updateButton.setDisable(false);
+            librarian_bookTitle.setText((String) selcetedBook.get(0)[1]);
+            librarian_bookAuthor.setText((String) selcetedBook.get(0)[2]);
+            librarian_bookPublisher.setText((String) selcetedBook.get(0)[3]);
+            librarian_bookCategory.setText((String) selcetedBook.get(0)[4]);
+            librarian_bookAvailable.setSelected((Boolean) selcetedBook.get(0)[5]);
+            librarian_bookshelfID.setText((String) selcetedBook.get(0)[7]);
+            librarian_bookShelfNo.setText(selcetedBook.get(0)[8].toString());
+            System.out.println(selcetedBook.get(0)[8].toString());
 
-                librarian_bookTitle.setText((String) selcetedBook.get(0)[1]);
-                librarian_bookAuthor.setText((String) selcetedBook.get(0)[2]);
-                librarian_bookPublisher.setText((String) selcetedBook.get(0)[3]);
-                librarian_bookCategory.setText((String) selcetedBook.get(0)[4]);
-                librarian_bookAvailable.setSelected((Boolean) selcetedBook.get(0)[5]);
-                librarian_bookshelfID.setText((String) selcetedBook.get(0)[7]);
-                librarian_bookShelfNo.setText(selcetedBook.get(0)[8].toString());
-                System.out.println(selcetedBook.get(0)[8].toString());
+            id = Integer.parseInt(librarian_bookID_txtf.getText());
 
-                id = Integer.parseInt(librarian_bookID_txtf.getText());
-
-                librarian_info.setVisible(true);
-            }
+            librarian_info.setVisible(true);
         }
-    }
 
-    private void showbkntfndAnim(String text) {
-        lirarian_bkntfnd_ere_lbl.setVisible(true);
-        lirarian_bkntfnd_ere_lbl.setText(text);
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                lirarian_bkntfnd_ere_lbl.setVisible(false);
-            }
-        }));
-        timeline.play();
     }
 
     public void DeleteButton() {
-        updatebooks_error_lbl.setVisible(true);
-        updatebooks_error_lbl.setTextFill(Color.RED);
-
         String deleteQuery = "DELETE FROM books WHERE id = " + id;
 
         int response = db.query(deleteQuery);
             if(response == -1)
             {
-                updatebooks_error_lbl.setText("Book could not be removed");
+                Utils.ShowMessage(updatebooks_error_lbl,"Book could not be removed", 5.0, Color.RED);
             }else {
                 int i = 0;
                 for (DevTools.BookListItem book : bookListViewItems) {
@@ -132,18 +120,10 @@ public class DeleteBooks {
                     }
                     i++;
                 }
-                updatebooks_error_lbl.setText("Book removed succesfully!");
-                updatebooks_error_lbl.setTextFill(Color.GREEN);
+
+                Utils.ShowMessage(updatebooks_error_lbl,"Book removed succesfully!", 5.0, Color.GREEN);
+                librarian_updateButton.setDisable(true);
             }
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    updatebooks_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
 
         librarian_bookTitle.clear();
         librarian_bookAuthor.clear();

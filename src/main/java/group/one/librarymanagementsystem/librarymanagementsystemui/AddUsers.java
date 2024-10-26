@@ -32,7 +32,6 @@ public class AddUsers {
     private Label addusers_error_lbl;
 
     public void initialize() {
-
         librarian_userRole.getItems().addAll("Librarian", "Library Staff", "Patron");
     }
 
@@ -71,19 +70,19 @@ public class AddUsers {
             addusers_error_lbl.setText("E-mail is empty!");
         } else if (role.isEmpty()) {
             addusers_error_lbl.setText("Select a user Role!");
-        }else
-        {
-            String insertQuery = "INSERT INTO users (role, name, email, username, password) " +
-                    "VALUES ('" + role + "', '" + fullname + "', '" + email + "', '" + username + "', '" + password + "')";
-
+        }else if (Utils.containsSpacesAndSpecialChars(username)) {
+            addusers_error_lbl.setText("Username must not contain space or special character");
+        } else if(!Utils.isValidEmail(email)) {
+            addusers_error_lbl.setText("The email is not valid");
+        }else {
+            String insertQuery = "INSERT INTO users (role, name, email, username, password) VALUES (?, ?, ?, ?, ?)";
             int response = db.query(insertQuery);
             if(response == -1)
             {
-                addusers_error_lbl.setText("User could not be added");
+                Utils.ShowMessage(addusers_error_lbl, "User could not be added", 5.0, Color.RED);
             }else
             {
-                addusers_error_lbl.setText("User added succesfully!");
-                addusers_error_lbl.setTextFill(Color.GREEN);
+                Utils.ShowMessage(addusers_error_lbl, "User added succesfully!", 5.0, Color.GREEN);
 
                 String findRowQuery = "SELECT id FROM users WHERE username = '" + username + "'";
                 List<Object[]> getRow = db.queryView(findRowQuery);
@@ -102,15 +101,6 @@ public class AddUsers {
                 ut.fine = new SimpleStringProperty("0");
                 userListViewItems.add(ut);
             }
-
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(5), new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    addusers_error_lbl.setVisible(false);
-                }
-            }));
-            timeline.play();
         }
     }
 
