@@ -1,0 +1,7 @@
+{
+    "db-username": "root",
+    "address": "localhost",
+    "port": 3306,
+    "currency": "TK",
+    "db-password": ""
+}

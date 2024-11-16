@@ -33,7 +33,7 @@ import java.io.IOException;
 public class DevTools {
     Database db = new Database();
 
-    public static String CONFIG_LOCATION =  Paths.get("").toAbsolutePath().toString()+ "/config.json";
+    public static String CONFIG_LOCATION =  Paths.get("").toAbsolutePath() + "/config.json";
 
     public static boolean configFileExists() {
         File configFile = new File(CONFIG_LOCATION);
@@ -263,7 +263,7 @@ public class DevTools {
     public int createConfig(JSONObject jo)
     {
         try (FileWriter file = new FileWriter(CONFIG_LOCATION)) {
-            System.out.println(Paths.get("").toAbsolutePath().toString());
+            System.out.println(Paths.get("").toAbsolutePath());
             file.write(jo.toString(4));
             file.flush();
             return 1;

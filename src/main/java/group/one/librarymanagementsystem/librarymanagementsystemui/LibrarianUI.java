@@ -263,19 +263,19 @@ public class LibrarianUI {
     }
 
     public void addUserUI(ActionEvent event) throws IOException{
-        dt.createNewUI("add_users.fxml", "Add Users", 520, 310);
+        dt.createNewUI("add_users.fxml", "Add Users", 600, 372);
     }
 
     public void updateUserUI(ActionEvent event) throws IOException{
-        dt.createNewUI("update_users.fxml", "Update Users", 520, 540);
+        dt.createNewUI("update_users.fxml", "Update Users", 600, 571);
     }
 
     public void updateUserFineUI(ActionEvent event) throws IOException{
-        dt.createNewUI("fine_info.fxml", "Update Fine", 520, 560);
+        dt.createNewUI("fine_info.fxml", "Update Fine", 620, 708);
     }
 
     public void removeUserUI(ActionEvent event) throws IOException{
-        dt.createNewUI("remove_users.fxml", "Remove Users", 580, 640);
+        dt.createNewUI("remove_users.fxml", "Remove Users", 600, 602);
     }
 
     public void settingsUI(ActionEvent event) throws IOException{

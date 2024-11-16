@@ -64,7 +64,7 @@ public class CheckoutBooks {
             if (checkDB.isEmpty() || !(Boolean) checkDB.get(0)[0]) {
                 Utils.ShowMessage(error_lbl, "The book is not available!", 5.0, Color.RED);
             } else {
-                if (((String) checkDB.get(0)[1] != null && !Objects.equals((String) checkDB.get(0)[1], "-- NONE --")) && !Objects.equals((String) checkDB.get(0)[1], "")) {
+                if ((checkDB.get(0)[1] != null && !Objects.equals(checkDB.get(0)[1], "-- NONE --")) && !Objects.equals(checkDB.get(0)[1], "")) {
                     Utils.ShowMessage(error_lbl, "The book is borrowed by someone!", 5.0, Color.RED);
                 } else {
                     String updateQuery = "UPDATE books SET available = 0, borrowed='" + puser + "' WHERE id =" + bid + ";";

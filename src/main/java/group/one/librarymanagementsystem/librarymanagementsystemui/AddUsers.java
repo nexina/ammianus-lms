@@ -76,7 +76,7 @@ public class AddUsers {
             addusers_error_lbl.setText("The email is not valid");
         }else {
             String insertQuery = "INSERT INTO users (role, name, email, username, password) VALUES (?, ?, ?, ?, ?)";
-            int response = db.query(insertQuery);
+            int response = db.query(insertQuery, role, fullname, email, username, password);
             if(response == -1)
             {
                 Utils.ShowMessage(addusers_error_lbl, "User could not be added", 5.0, Color.RED);

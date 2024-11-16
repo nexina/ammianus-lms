@@ -78,10 +78,10 @@ public class UpdateUsers {
 
                 System.out.println((String) selectedUser.get(0)[1]);
 
-                if(Objects.equals((String) selectedUser.get(0)[1], "Librarian"))
+                if(Objects.equals(selectedUser.get(0)[1], "Librarian"))
                 {
                     librarian_userRole.getSelectionModel().select(0);
-                }else if(Objects.equals((String) selectedUser.get(0)[1], "Library Staff"))
+                }else if(Objects.equals(selectedUser.get(0)[1], "Library Staff"))
                 {
                     librarian_userRole.getSelectionModel().select(1);
                 }else

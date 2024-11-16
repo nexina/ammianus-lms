@@ -92,10 +92,10 @@ public class MoveBook {
         String currentBookQuery = "SELECT id, bookshelf, shelf FROM books WHERE id="+current_bookid+";";
         List<Object[]> currentBook = db.queryView(currentBookQuery);
 
-        String updateQuery = "UPDATE books SET bookshelf='"+(String)currentBook.get(0)[1]+"', shelf="+(int)currentBook.get(0)[2]+" WHERE id="+found_bookid+";";
+        String updateQuery = "UPDATE books SET bookshelf='"+ currentBook.get(0)[1] +"', shelf="+ currentBook.get(0)[2] +" WHERE id="+found_bookid+";";
         db.query(updateQuery);
 
-        updateQuery = "UPDATE books SET bookshelf='"+(String) noBookinPosition.get(0)[1]+"', shelf="+(int) noBookinPosition.get(0)[2]+" WHERE id="+current_bookid+";";
+        updateQuery = "UPDATE books SET bookshelf='"+ noBookinPosition.get(0)[1] +"', shelf="+ noBookinPosition.get(0)[2] +" WHERE id="+current_bookid+";";
         db.query(updateQuery);
 
         Utils.ShowMessage(success, "Book Position has been updated! Refresh the list to see update !", 5.0, Color.GREEN);

@@ -135,10 +135,10 @@ public class UpdateFine {
             y = BigInteger.valueOf(0);
 
         }else{
-            fine_finePaid.setText(y.toString() + "TK");
+            fine_finePaid.setText(y + "TK");
         }
 
-        fine_fineAdded.setText(x.toString() + "TK");
+        fine_fineAdded.setText(x + "TK");
 
 
         BigInteger res = new BigInteger(currentFine.toString());
